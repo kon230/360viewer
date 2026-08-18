@@ -13,8 +13,8 @@ export const DEFAULT_CAMERAS = [
   {
     id: 'cam1',
     name: 'カメラ1',
-    x: 34,
-    y: 55,
+    x: 34.42,
+    y: 61.07,
     images: {
       A: '/images/panoramas/cam-corridor-a.jpg',
       B: '/images/panoramas/cam-corridor-b.jpg',
@@ -27,8 +27,8 @@ export const DEFAULT_CAMERAS = [
   {
     id: 'cam2',
     name: 'カメラ2',
-    x: 40,
-    y: 24,
+    x: 31.09,
+    y: 41.79,
     images: {
       A: '/images/panoramas/cam-lounge-a.jpg',
       B: '/images/panoramas/cam-lounge-b.jpg',
