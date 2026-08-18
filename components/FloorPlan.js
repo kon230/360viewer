@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { FLOORPLAN_IMAGE } from '@/data/defaultData';
 
 function CameraGlyph() {
@@ -17,58 +16,20 @@ function CameraGlyph() {
   );
 }
 
-export default function FloorPlan({ cameras, currentCameraId, editMode, onSelect, onMove }) {
-  const containerRef = useRef(null);
-  const dragId = useRef(null);
-  const moved = useRef(false);
-  const downPos = useRef({ x: 0, y: 0 });
-
-  function handlePointerDown(e, id) {
-    e.stopPropagation();
-    dragId.current = id;
-    moved.current = false;
-    downPos.current = { x: e.clientX, y: e.clientY };
-    e.currentTarget.setPointerCapture(e.pointerId);
-  }
-
-  function handlePointerMove(e) {
-    if (!dragId.current || !containerRef.current) return;
-    if (Math.hypot(e.clientX - downPos.current.x, e.clientY - downPos.current.y) > 3) {
-      moved.current = true;
-    }
-    if (!editMode) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    let x = ((e.clientX - rect.left) / rect.width) * 100;
-    let y = ((e.clientY - rect.top) / rect.height) * 100;
-    x = Math.max(0, Math.min(100, x));
-    y = Math.max(0, Math.min(100, y));
-    onMove(dragId.current, x, y);
-  }
-
-  function handlePointerUp() {
-    if (dragId.current && !moved.current) {
-      onSelect(dragId.current);
-    }
-    dragId.current = null;
-  }
-
+// Camera icon positions are fixed by design: no drag-to-reposition here,
+// only click-to-select.
+export default function FloorPlan({ cameras, currentCameraId, onSelect }) {
   return (
-    <div
-      ref={containerRef}
-      className="floorplan"
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-    >
+    <div className="floorplan">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={FLOORPLAN_IMAGE} alt="平面図" className="floorplan-img" draggable={false} />
       {cameras.map((cam) => (
         <button
           key={cam.id}
           type="button"
-          className={`floorplan-pin${cam.id === currentCameraId ? ' active' : ''}${editMode ? ' editable' : ''}`}
+          className={`floorplan-pin${cam.id === currentCameraId ? ' active' : ''}`}
           style={{ left: `${cam.x}%`, top: `${cam.y}%` }}
-          onPointerDown={(e) => handlePointerDown(e, cam.id)}
+          onClick={() => onSelect(cam.id)}
           title={cam.name}
         >
           <CameraGlyph />

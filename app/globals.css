@@ -81,11 +81,6 @@ body {
   box-shadow: 0 0 0 3px rgba(43, 111, 224, 0.25), 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-.floorplan-pin.editable {
-  cursor: grab;
-  border-style: dashed;
-}
-
 .floorplan-pin-label {
   position: absolute;
   top: 100%;
@@ -332,8 +327,7 @@ body {
 }
 
 .pano-marker.edit-mode {
-  border-style: dashed;
-  cursor: grab;
+  box-shadow: 0 0 0 3px rgba(43, 111, 224, 0.28), 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .pano-marker-icon {
