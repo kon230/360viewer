@@ -18,9 +18,10 @@ export default function Page() {
     setCurrentPlan,
     setCurrentCameraId,
     renameCamera,
-    addCamera,
     deleteCamera,
+    updateCameraPosition,
     addMarker,
+    updateMarker,
     updateMarkerTarget,
     deleteMarker,
   } = useViewer();
@@ -37,11 +38,24 @@ export default function Page() {
     [addMarker, currentCameraId, otherCameras]
   );
 
+  const handleMarkerDrag = useCallback(
+    (markerId, yaw, pitch) => {
+      updateMarker(currentCameraId, markerId, yaw, pitch);
+    },
+    [updateMarker, currentCameraId]
+  );
+
   return (
     <div className="app-shell">
       <div className="left-column">
         <div className="floorplan-pane">
-          <FloorPlan cameras={cameras} currentCameraId={currentCameraId} onSelect={setCurrentCameraId} />
+          <FloorPlan
+            cameras={cameras}
+            currentCameraId={currentCameraId}
+            editMode={editMode}
+            onSelect={setCurrentCameraId}
+            onMove={updateCameraPosition}
+          />
         </div>
         <Sidebar
           plans={plans}
@@ -51,7 +65,6 @@ export default function Page() {
           currentCameraId={currentCameraId}
           onSelectCamera={setCurrentCameraId}
           onRenameCamera={renameCamera}
-          onAddCamera={addCamera}
           onDeleteCamera={deleteCamera}
           editMode={editMode}
           onToggleEditMode={() => setEditMode((v) => !v)}
@@ -70,6 +83,7 @@ export default function Page() {
           otherCameras={otherCameras}
           editMode={editMode}
           onNavigate={setCurrentCameraId}
+          onMarkerDrag={handleMarkerDrag}
           onMarkerDelete={(markerId) => deleteMarker(currentCameraId, markerId)}
           onMarkerTargetChange={(markerId, targetId) => updateMarkerTarget(currentCameraId, markerId, targetId)}
           onAddMarker={handleAddMarker}

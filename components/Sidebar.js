@@ -8,7 +8,6 @@ export default function Sidebar({
   currentCameraId,
   onSelectCamera,
   onRenameCamera,
-  onAddCamera,
   onDeleteCamera,
   editMode,
   onToggleEditMode,
@@ -74,11 +73,6 @@ export default function Sidebar({
             </li>
           ))}
         </ul>
-        {editMode && (
-          <button type="button" className="camera-add-btn" onClick={onAddCamera}>
-            + カメラを追加
-          </button>
-        )}
       </div>
     </div>
   );

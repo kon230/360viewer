@@ -11,6 +11,7 @@ export default function PanoramaViewer({
   otherCameras,
   editMode,
   onNavigate,
+  onMarkerDrag,
   onMarkerDelete,
   onMarkerTargetChange,
   onAddMarker,
@@ -82,12 +83,15 @@ export default function PanoramaViewer({
         if (marker && onNavigate) onNavigate(marker.targetId);
       }
     });
+    engine.on('markerDrag', (id, yaw, pitch) => {
+      if (onMarkerDrag) onMarkerDrag(id, yaw, pitch);
+    });
     engine.on('placeMarker', (yaw, pitch) => {
       setPlacing(false);
       if (onAddMarker) onAddMarker(yaw, pitch);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode, onNavigate, onAddMarker]);
+  }, [editMode, onNavigate, onMarkerDrag, onAddMarker]);
 
   const activeMarkerEl = activeMarkerId && engineRef.current ? engineRef.current.markerEls.get(activeMarkerId) : null;
 
