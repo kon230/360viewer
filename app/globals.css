@@ -1,0 +1,437 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #14161a;
+  color: #1c1c1e;
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  overscroll-behavior: none;
+}
+
+.app-shell {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ---------- left column ---------- */
+
+.left-column {
+  width: 320px;
+  min-width: 260px;
+  max-width: 40vw;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: 1px solid #d9dadd;
+  background: #ffffff;
+}
+
+.floorplan-pane {
+  flex: 0 0 46%;
+  border-bottom: 1px solid #e2e3e6;
+  background: #f4f5f7;
+  overflow: hidden;
+}
+
+.floorplan {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.floorplan-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.floorplan-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #2b6fe0;
+  background: #ffffff;
+  color: #2b6fe0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  touch-action: none;
+}
+
+.floorplan-pin.active {
+  background: #2b6fe0;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(43, 111, 224, 0.25), 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.floorplan-pin.editable {
+  cursor: grab;
+  border-style: dashed;
+}
+
+.floorplan-pin-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 3px;
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: #333;
+  pointer-events: none;
+}
+
+/* ---------- sidebar ---------- */
+
+.sidebar-panel {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-section {
+  padding: 12px 14px;
+  border-bottom: 1px solid #eceef1;
+}
+
+.sidebar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b6f76;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.edit-toggle {
+  background: #ffffff;
+  border: 1px solid #cfd2d8;
+  color: #3a3d42;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-toggle.active {
+  background: #ffe9d6;
+  border-color: #e08a2b;
+  color: #a75c00;
+}
+
+.plan-switch {
+  display: flex;
+  gap: 8px;
+}
+
+.plan-btn {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #d3d5da;
+  color: #2c2d31;
+  padding: 10px 6px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.plan-btn:hover {
+  border-color: #9aa1ac;
+}
+
+.plan-btn.active {
+  border-color: #2b6fe0;
+  color: #2b6fe0;
+  box-shadow: 0 0 0 1px #2b6fe0 inset;
+}
+
+.camera-list-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.camera-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.camera-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.camera-select-btn {
+  flex: 1;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e0e1e5;
+  color: #202124;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.camera-list li.active .camera-select-btn {
+  border-color: #2b6fe0;
+  color: #2b6fe0;
+  background: #eef4fe;
+}
+
+.camera-name-input {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #cfd2d8;
+  color: #202124;
+  padding: 7px 9px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.camera-list li.active .camera-name-input {
+  border-color: #2b6fe0;
+}
+
+.camera-delete-btn {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #e3b3b3;
+  background: #ffffff;
+  color: #c23b3b;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-delete-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.camera-add-btn {
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px dashed #9aa1ac;
+  color: #3a3d42;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* ---------- right pane / panorama ---------- */
+
+.right-pane {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  background: #000;
+}
+
+.pano-header {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: rgba(20, 20, 22, 0.55);
+  backdrop-filter: blur(4px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: #fff;
+  pointer-events: none;
+}
+
+.pano-header-camera {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pano-header-plan {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.pano-viewer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.pano-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+
+.pano-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pano-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+  margin-top: -15px;
+  border-radius: 50%;
+  background: rgba(255, 179, 0, 0.95);
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c1c1e;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.pano-marker.edit-mode {
+  background: rgba(255, 149, 0, 0.95);
+  outline: 2px dashed rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
+}
+
+.pano-marker-arrow {
+  font-size: 13px;
+  transform: translateY(-1px);
+}
+
+.pano-marker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1c1c1e;
+}
+
+.pano-toolbar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+}
+
+.pano-toolbar-btn {
+  background: #ffffff;
+  border: 1px solid #d3d5da;
+  color: #202124;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.pano-toolbar-btn.active {
+  background: #ffb300;
+  border-color: #e08a2b;
+}
+
+.marker-popover {
+  position: absolute;
+  left: 20px;
+  top: -10px;
+  min-width: 170px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  padding: 10px;
+  color: #202124;
+  font-size: 12px;
+}
+
+.marker-popover-close {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #6b6f76;
+}
+
+.marker-popover-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0 10px;
+}
+
+.marker-popover-row select {
+  padding: 5px 6px;
+  border-radius: 6px;
+  border: 1px solid #d3d5da;
+  font-size: 12px;
+}
+
+.marker-popover-delete {
+  width: 100%;
+  background: #fff0f0;
+  border: 1px solid #e3b3b3;
+  color: #c23b3b;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    flex-direction: column;
+  }
+  .left-column {
+    width: 100%;
+    max-width: none;
+    height: 46%;
+  }
+  .right-pane {
+    height: 54%;
+  }
+}
