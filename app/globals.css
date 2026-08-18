@@ -246,6 +246,17 @@ body {
   cursor: not-allowed;
 }
 
+.camera-add-btn {
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px dashed #9aa1ac;
+  color: #3a3d42;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
 /* ---------- right pane / panorama ---------- */
 
 .right-pane {

@@ -18,6 +18,7 @@ export default function Page() {
     setCurrentPlan,
     setCurrentCameraId,
     renameCamera,
+    addCamera,
     deleteCamera,
     updateCameraPosition,
     addMarker,
@@ -65,6 +66,7 @@ export default function Page() {
           currentCameraId={currentCameraId}
           onSelectCamera={setCurrentCameraId}
           onRenameCamera={renameCamera}
+          onAddCamera={addCamera}
           onDeleteCamera={deleteCamera}
           editMode={editMode}
           onToggleEditMode={() => setEditMode((v) => !v)}
