@@ -2,11 +2,10 @@
 
 import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
-import { PanoramaEngine, makePlaceholderDataUrl } from '@/lib/panoramaEngine';
+import { PanoramaEngine } from '@/lib/panoramaEngine';
 
 export default function PanoramaViewer({
   imageUrl,
-  placeholderLabel,
   markers,
   otherCameras,
   editMode,
@@ -38,9 +37,12 @@ export default function PanoramaViewer({
   useEffect(() => {
     const engine = engineRef.current;
     if (!engine) return;
-    const url = imageUrl || makePlaceholderDataUrl(placeholderLabel || '画像未設定', 210);
-    engine.loadImage(url).catch(() => {});
-  }, [imageUrl, placeholderLabel, ready]);
+    if (imageUrl) {
+      engine.loadImage(imageUrl).catch(() => {});
+    } else {
+      engine.setBlackTexture();
+    }
+  }, [imageUrl, ready]);
 
   useEffect(() => {
     const engine = engineRef.current;

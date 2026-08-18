@@ -80,7 +80,6 @@ export default function Page() {
         </div>
         <PanoramaViewer
           imageUrl={currentCamera.images[currentPlan]}
-          placeholderLabel={`${currentCamera.name}（${planLabel}）`}
           markers={currentCamera.markers}
           otherCameras={otherCameras}
           editMode={editMode}
