@@ -57,11 +57,13 @@ public/images/
 
 初回デプロイ時に 1 回だけ、Vercel 側で Blob ストレージを有効にする必要があります。
 
-1. Vercel のプロジェクト画面 →「Storage」タブ →「Create Database」→ **Blob** を選択して作成
-2. 作成したストアをこのプロジェクトに Connect（`BLOB_READ_WRITE_TOKEN` という環境変数が自動で追加されます）
+1. Vercel でプロジェクトを開き、左サイドバーの「Storage」→「Create Database」→ **Blob** を選択して作成（アクセス設定は **Public**）
+2. 作成したストアをこのプロジェクトに Connect（`BLOB_READ_WRITE_TOKEN` などの環境変数が自動で追加されます）
 3. 一度 Redeploy する（環境変数を反映させるため）
 
 これを行わない間は、編集内容がその場では反映されますが保存されず、ページを再読み込みすると初期状態（`data/defaultData.js`）に戻ります。
+
+読み込みは `get(..., { useCache: false })` でBlobのCDNキャッシュを経由せず常に最新を取得しているため、保存後すぐに他のブラウザで再読み込みしても最新の状態が反映されます。
 
 ## Vercel へのデプロイ
 
